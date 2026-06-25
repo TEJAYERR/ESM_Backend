@@ -1,8 +1,10 @@
 package com.events_and_stalls_management_system.esm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -11,6 +13,7 @@ import java.util.UUID;
 @Entity(name = "bookings")
 @Setter
 @Getter
+@ToString
 public class Booking {
 
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -19,6 +22,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "stall_id")
+    @JsonIgnore
     private Stall stall;
 
     private BigDecimal amount;

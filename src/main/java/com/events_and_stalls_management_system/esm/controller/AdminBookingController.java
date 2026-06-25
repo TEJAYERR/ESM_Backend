@@ -3,6 +3,7 @@ package com.events_and_stalls_management_system.esm.controller;
 import com.events_and_stalls_management_system.esm.dto.BookingUpdateRequest;
 import com.events_and_stalls_management_system.esm.entity.BookingStatus;
 import com.events_and_stalls_management_system.esm.service.BookingService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +22,7 @@ public class AdminBookingController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/bookings")
+    @Transactional
     public ResponseEntity<?> getAllBookings(@RequestParam BookingStatus bookingStatus,
                                             @RequestParam(required = false) String searchKeyword){
 
