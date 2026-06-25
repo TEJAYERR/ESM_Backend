@@ -11,6 +11,7 @@ import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 import jakarta.transaction.Transactional;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,12 @@ public class StallService {
     private final StallRepo stallRepo;
     private final EventService eventService;
     private final BookingRepo bookingRepo;
+
+    @Value("${razorpay.key}")
+    private String razorpayKey;
+
+    @Value("${razorpay.secret}")
+    private String razorpaySecret;
 
     public StallService(StallRepo stallRepo, EventService eventService, BookingRepo bookingRepo) {
         this.stallRepo = stallRepo;
