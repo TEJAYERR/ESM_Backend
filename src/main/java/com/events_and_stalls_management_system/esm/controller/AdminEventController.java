@@ -1,7 +1,9 @@
 package com.events_and_stalls_management_system.esm.controller;
 
 import com.events_and_stalls_management_system.esm.dto.EventRequest;
+import com.events_and_stalls_management_system.esm.dto.EventStatusUpdate;
 import com.events_and_stalls_management_system.esm.dto.EventUpdateRequest;
+import com.events_and_stalls_management_system.esm.entity.EventStatus;
 import com.events_and_stalls_management_system.esm.service.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -57,5 +60,11 @@ public class AdminEventController {
     @PatchMapping("/events/{eventId}/blueprint")
     public ResponseEntity<?> updateEventStallBluePrint(@PathVariable UUID eventId, @RequestPart MultipartFile blueprintFile) throws IOException {
         return new ResponseEntity<>(eventService.updateEventStallBluePrint(eventId, blueprintFile), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/events/{eventId}/status")
+    public ResponseEntity<?> updateEventStatus(@PathVariable UUID eventId, @RequestBody EventStatusUpdate eventStatusUpdate) throws IOException {
+        return new ResponseEntity<>(Map.of("message", eventService.updateEventStaus(eventId, eventStatusUpdate)), HttpStatus.OK);
     }
 }

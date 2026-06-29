@@ -32,6 +32,9 @@ public class Event {
     @Basic(fetch = FetchType.LAZY)
     private byte[] stallsBluePrint;
 
+    @Enumerated(EnumType.STRING)
+    private EventStatus eventStatus = EventStatus.OPEN;
+
     private String stallsBluePrintContentType;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)

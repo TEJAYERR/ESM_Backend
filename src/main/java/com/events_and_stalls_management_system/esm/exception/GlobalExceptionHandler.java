@@ -87,6 +87,24 @@ public class GlobalExceptionHandler {
                 .body(errorResponse);
     }
 
+    @ExceptionHandler(EventClosedException.class)
+    public ResponseEntity<ErrorResponse> handleEventClosedException(
+            EventClosedException eventClosedException,
+            HttpServletRequest httpServletRequest
+    ){
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(403)
+                .error("Forbidden")
+                .message(eventClosedException.getMessage())
+                .path((httpServletRequest.getRequestURI()))
+                .build();
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(errorResponse);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGenericException(
             Exception ex,

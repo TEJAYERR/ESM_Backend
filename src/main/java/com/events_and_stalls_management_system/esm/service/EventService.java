@@ -1,10 +1,8 @@
 package com.events_and_stalls_management_system.esm.service;
 
-import com.events_and_stalls_management_system.esm.dto.EventRequest;
-import com.events_and_stalls_management_system.esm.dto.EventResponse;
-import com.events_and_stalls_management_system.esm.dto.EventUpdateRequest;
-import com.events_and_stalls_management_system.esm.dto.StallRequest;
+import com.events_and_stalls_management_system.esm.dto.*;
 import com.events_and_stalls_management_system.esm.entity.Event;
+import com.events_and_stalls_management_system.esm.entity.EventStatus;
 import com.events_and_stalls_management_system.esm.entity.Stall;
 import com.events_and_stalls_management_system.esm.exception.BadRequestException;
 import com.events_and_stalls_management_system.esm.exception.ResourceNotFoundException;
@@ -137,5 +135,15 @@ public class EventService {
     public Event getEvent(UUID eventId) {
         return eventRepo.findById(eventId)
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+    }
+
+    public String updateEventStaus(UUID eventId, EventStatusUpdate eventStatusUpdatee) {
+
+        Event event = eventRepo.findById(eventId)
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+
+        event.setEventStatus(eventStatusUpdatee.getEventStatus());
+        eventRepo.save(event);
+        return "changed the event status";
     }
 }

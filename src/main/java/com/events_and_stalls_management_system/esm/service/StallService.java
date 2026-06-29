@@ -3,6 +3,7 @@ package com.events_and_stalls_management_system.esm.service;
 import com.events_and_stalls_management_system.esm.dto.*;
 import com.events_and_stalls_management_system.esm.entity.*;
 import com.events_and_stalls_management_system.esm.exception.BadRequestException;
+import com.events_and_stalls_management_system.esm.exception.EventClosedException;
 import com.events_and_stalls_management_system.esm.exception.ResourceNotFoundException;
 import com.events_and_stalls_management_system.esm.repository.BookingRepo;
 import com.events_and_stalls_management_system.esm.repository.StallRepo;
@@ -97,6 +98,11 @@ public class StallService {
 
         if(stall.getStallStatus() != StallStatus.AVAILABLE){
             throw new BadRequestException("Already booked");
+        }
+
+        System.out.println("Event Status = "  + stall.getEvent().getEventStatus());
+        if(stall.getEvent().getEventStatus() == EventStatus.CLOSED){
+            throw new EventClosedException("Event is closed.");
         }
 
         Booking booking = new Booking();
