@@ -191,4 +191,4 @@ java -jar target/<application-name>.jar
 
 ## License
 
-This project is available for learning, portfolio, and personal use.
+This project is developed as a production application for managing event stall bookings and administrative operations.
